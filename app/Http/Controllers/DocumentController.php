@@ -17,7 +17,7 @@ class DocumentController extends Controller
 
         $content = (new MarkdownParser)->parse($path, $version);
 
-        return view('welcome', compact('content'));
+        return view('docs.show', compact('content'));
     }
 
     /**
