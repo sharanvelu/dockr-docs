@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('docs/{version}/{path}', [\App\Http\Controllers\DocumentController::class, 'show']);
