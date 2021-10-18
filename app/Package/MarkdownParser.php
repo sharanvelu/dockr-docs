@@ -2,16 +2,18 @@
 
 namespace App\Package;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Cache\Repository as Cache;
 
 class MarkdownParser
 {
     protected $cache;
+    protected $files;
 
     public function __construct()
     {
-        $this->cache = app('cache');
+        $this->cache = app(Cache::class);
+        $this->files = app(Filesystem::class);
     }
 
     public function parse($path, $version = null)
@@ -57,18 +59,9 @@ class MarkdownParser
      */
     public function getMarkdownContent($path, $version): string
     {
-        $markdownUrl = $this->getMarkdownPath($path, $version);
+        $markdownPath = $this->getMarkdownPath($path, $version);
 
-        $client = new Client();
-        try {
-            $response = $client->get($markdownUrl);
-            $markdown = $response->getBody()->getContents();
-        } catch (GuzzleException | \Exception $exception) {
-            logError($exception, 'Error while getting markdown data', __METHOD__);
-            $markdown = configEnv('markdown.empty.error');
-        }
-
-        return $markdown;
+        return $this->files->get($markdownPath);
     }
 
     /**
@@ -82,12 +75,7 @@ class MarkdownParser
     {
         $filename = $this->getMarkdownFileName($path);
 
-        $repoUrl = configEnv('markdown.raw.repo_url');
-
-        $repoUrl = str_replace('$version', $version, $repoUrl);
-        $repoUrl = str_replace('$filename', $filename, $repoUrl);
-
-        return ($repoUrl);
+        return base_path("markdown/$version/$filename");
     }
 
     /**

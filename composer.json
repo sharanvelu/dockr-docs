@@ -40,7 +40,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@get-markdown"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi"
@@ -50,7 +51,15 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "get-markdown": [
+            "Composer\\Config::disableProcessTimeout",
+            "chmod u+x markdown/get.sh",
+            "markdown/get.sh"
         ]
+    },
+    "scripts-descriptions": {
+        "get-markdown": "Pull the markdown from its repository and add it in the project directory."
     },
     "extra": {
         "laravel": {
