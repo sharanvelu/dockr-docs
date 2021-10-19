@@ -58,4 +58,38 @@ class Parsedown extends ParsedownExtra
     {
         return str_replace('{{version}}', $version, $content);
     }
+
+    /**
+     * @param $markdown
+     * @param $version
+     * @return string
+     */
+    public function makeSideBar($markdown, $version): string
+    {
+        $text = parent::text($markdown);
+
+        $text = $this->replaceLinks($version, $text);
+
+        return $this->addListItemClass($text);
+    }
+
+    public function addListItemClass(string $text): string
+    {
+        $lines = explode("\n", $text);
+
+        foreach ($lines as $number => $line) {
+            preg_match('/<li>([a-zA-z\s]+)/', $line, $matches);
+            if (isset($matches[1])) {
+                $lines[$number] = '<li class="nav-item"><a class="nav-link has-dropdown" href="#">' . $matches[1] . '</a>';
+            }
+            unset($matches);
+
+            preg_match('/<li><a href="(.+)<\/a><\/li>/', $line, $matches);
+            if (isset($matches[1])) {
+                $lines[$number] = '<li class="nav-item"><a class="nav-link" href="' . $matches[1] . '</a></li>';
+            }
+        }
+
+        return str_replace('<ul>', '<ul class="nav flex-column">', implode("\n", $lines));
+    }
 }

@@ -15,9 +15,11 @@ class DocumentController extends Controller
     {
         $this->fileExist($path, $version);
 
+        $sidebarContent = (new MarkdownParser())->parse('documentation', $version, true);
+
         $content = (new MarkdownParser)->parse($path, $version);
 
-        return view('docs.show', compact('content'));
+        return view('docs.show', compact('content', 'sidebarContent'));
     }
 
     /**

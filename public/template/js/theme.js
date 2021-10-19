@@ -97,12 +97,17 @@
        Sections Scroll
     -------------------------- */
 
-    $('.smooth-scroll,.idocs-navigation a').on('click', function () {
+    // $('.smooth-scroll,.idocs-navigation a').on('click', function () {
+    //     event.preventDefault();
+    //     let sectionTo = $(this).attr('href');
+    //     $('html, body').stop().animate({
+    //         scrollTop: $(sectionTo).offset().top - 120
+    //     }, 1000, 'easeInOutExpo');
+    // });
+
+    $('.idocs-navigation .nav .nav-item a.nav-link.has-dropdown').on('click', function () {
         event.preventDefault();
-        let sectionTo = $(this).attr('href');
-        $('html, body').stop().animate({
-            scrollTop: $(sectionTo).offset().top - 120
-        }, 1000, 'easeInOutExpo');
+        $(this).toggleClass('active');
     });
 
     /*-----------------------------
