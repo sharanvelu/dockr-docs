@@ -4,13 +4,16 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
-    <link href="{{ asset('template/images/favicon.png') }}" rel="icon"/>
+    <link href="{{ $appIcon  }}" rel="icon"/>
     <title>Documentation | Your ThemeForest item Name</title>
-    <meta name="description" content="Your ThemeForest item Name and description">
-    <meta name="author" content="harnishdesign.net">
+    <meta name="author" content="sharanvelu">
+    <meta name="description" content="Documentation For Dockr">
+
+    <!-- Credit -->
+    <meta name="credit" content="harnishdesign.net">
+    <meta name="credit_for" content="This Documentation Template">
 
     <!-- Stylesheet -->
-    <!-- ============================== -->
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('template/vendor/bootstrap/css/bootstrap.min.css') }}"/>
     <!-- Font Awesome Icon -->
@@ -21,27 +24,19 @@
     <link rel="stylesheet" href="{{ asset('template/vendor/highlight.js/styles/vs.css') }}"/>
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('template/css/stylesheet.css') }}"/>
+    <!-- Accent Color -->
     <link rel="stylesheet" href="{{ asset('template/css/color-cyan.css') }}"/>
 </head>
 
 <body class="box" data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
 
-<!-- Preloader -->
-<div class="preloader">
-    <div class="lds-ellipsis">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-</div>
-<!-- Preloader End -->
+<x-preloader></x-preloader>
 
 <!-- Document Wrapper -->
 <div id="main-wrapper">
 
     <!-- Header -->
-    @include('docs.header')
+@include('docs.header')
 
     <!-- Content -->
     <div id="content" role="main">
@@ -64,8 +59,7 @@
 <!-- Back To Top -->
 <a id="back-to-top" data-toggle="tooltip" title="Back to Top" href="javascript:void(0)"><i class="fa fa-chevron-up"></i></a>
 
-<!-- JavaScript
-============================ -->
+<!-- JavaScript -->
 <script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Highlight JS -->

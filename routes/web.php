@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('docs/{version}/{path}', [\App\Http\Controllers\DocumentController::class, 'show']);
+Route::get('/', [HomeController::class, 'index']);
+
+Route::get('docs/{version}/{path}', [DocumentController::class, 'show']);

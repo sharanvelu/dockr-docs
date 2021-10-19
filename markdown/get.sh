@@ -6,7 +6,7 @@ if [ ! -f composer.json ]; then
 fi
 
 DOCS_VERSIONS=(
-  0.1
+  temp
 )
 
 for v in "${DOCS_VERSIONS[@]}"; do
@@ -18,3 +18,5 @@ for v in "${DOCS_VERSIONS[@]}"; do
         git clone --single-branch --branch "$v" --no-tags https://github.com/sharanvelu/dockr-documentation.git "markdown/$v"
     fi;
 done
+
+git clone --single-branch --branch 8.x --no-tags https://github.com/laravel/docs.git "markdown/laravel"

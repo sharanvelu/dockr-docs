@@ -8,7 +8,7 @@
 
             <!-- Logo -->
             <a class="logo ml-md-3" href="index.html" title="iDocs Template">
-                <img src="{{ asset('logo/short.png') }}"
+                <img src="{{ $appLogo }}"
                      alt="iDocs Template"
                      width="150rem"
                 />
