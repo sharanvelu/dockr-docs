@@ -30,3 +30,28 @@ function logError(Exception $error, $message, $location, array $params = [])
         'trace' => $error->getTraceAsString(),
     ]);
 }
+
+/**
+ * Get Version for given version
+ *
+ * @param $version
+ * @return \Illuminate\Config\Repository|mixed
+ */
+function getVersion($version)
+{
+    if (is_null($version)) {
+        return getDefaultVersion();
+    }
+
+    return $version;
+}
+
+/**
+ * Get Default Version
+ *
+ * @return \Illuminate\Config\Repository|mixed
+ */
+function getDefaultVersion()
+{
+    return configEnv('version.list')[0];
+}

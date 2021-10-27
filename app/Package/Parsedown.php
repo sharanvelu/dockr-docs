@@ -62,20 +62,24 @@ class Parsedown extends ParsedownExtra
     /**
      * @param $markdown
      * @param $version
+     * @param $activePath
      * @return string
      */
-    public function makeSideBar($markdown, $version): string
+    public function makeSideBar($markdown, $version, $activePath): string
     {
         $text = parent::text($markdown);
 
+        $text = str_replace('.md', '', $text);
+
         $text = $this->replaceLinks($version, $text);
 
-        return $this->addListItemClass($text);
+        return $this->addListItemClass($text, $activePath);
     }
 
-    public function addListItemClass(string $text): string
+    public function addListItemClass(string $text, $activePath = null): string
     {
         $lines = explode("\n", $text);
+        $isActivePathAdded = false;
 
         foreach ($lines as $number => $line) {
             preg_match('/<li>([a-zA-z\s]+)/', $line, $matches);
@@ -86,7 +90,12 @@ class Parsedown extends ParsedownExtra
 
             preg_match('/<li><a href="(.+)<\/a><\/li>/', $line, $matches);
             if (isset($matches[1])) {
-                $lines[$number] = '<li class="nav-item"><a class="nav-link" href="' . $matches[1] . '</a></li>';
+                $activeClass = '';
+                if (Str::contains($matches[1], './' . $activePath) && !$isActivePathAdded) {
+                    $activeClass = ' active';
+                    $isActivePathAdded = true;
+                }
+                $lines[$number] = '<li class="nav-item"><a class="nav-link' . $activeClass . '" href="' . $matches[1] . '</a></li>';
             }
         }
 

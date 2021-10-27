@@ -19,6 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('docs/{version}/{path}', [DocumentController::class, 'show']);
+Route::get('docs/{version}/{path}', [DocumentController::class, 'show'])->name('docs.show');

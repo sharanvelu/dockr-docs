@@ -105,11 +105,6 @@
     //     }, 1000, 'easeInOutExpo');
     // });
 
-    $('.idocs-navigation .nav .nav-item a.nav-link.has-dropdown').on('click', function () {
-        event.preventDefault();
-        $(this).toggleClass('active');
-    });
-
     /*-----------------------------
         Magnific Popup
     ------------------------------- */

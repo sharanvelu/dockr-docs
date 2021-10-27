@@ -26,9 +26,11 @@
     <link rel="stylesheet" href="{{ asset('template/css/stylesheet.css') }}"/>
     <!-- Accent Color -->
     <link rel="stylesheet" href="{{ asset('template/css/color-cyan.css') }}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/custom.css') }}"/>
 </head>
 
-<body class="box" data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
+<body class="box" data-offset="125">
 
 <x-preloader></x-preloader>
 
@@ -50,9 +52,6 @@
     </div>
     <!-- Content end -->
 
-    <!-- Footer -->
-    @include('docs.footer')
-
 </div>
 <!-- Document Wrapper end -->
 
@@ -68,7 +67,9 @@
 <script src="{{ asset('template/vendor/jquery.easing/jquery.easing.min.js') }}"></script>
 <!-- Magnific Popup -->
 <script src="{{ asset('template/vendor/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
-<!-- Custom Script -->
+<!-- Template Custom Script -->
 <script src="{{ asset('template/js/theme.js') }}"></script>
+<!-- Custom Scripts -->
+<script src="{{ asset('assets/custom.js') }}"></script>
 </body>
 </html>

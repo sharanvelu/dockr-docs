@@ -16,12 +16,35 @@ class MarkdownParser
         $this->files = app(Filesystem::class);
     }
 
+    public function parseSidebar($activePath, $version = null)
+    {
+        // todo : Remove this if statement;
+        if (app()->isLocal()) {
+            $this->cache->flush();
+        }
+
+        $path = 'documentation';
+        $version = getVersion($version);
+
+        return $this->cache->remember(
+            $this->getCacheKey($path, $version),    // Key to store the cached data for requested data (as HTML).
+            configEnv('markdown.cache.ttl'),    // Time to Live for cached data.
+            function () use ($path, $version, $activePath) {
+                $markdown = $this->getMarkdownContent($path, $version);
+
+                return (new Parsedown())->makeSideBar($markdown, $version, $activePath);
+            }
+        );
+    }
+
     public function parse($path, $version = null, $isSideBar = false)
     {
         // todo : Remove this if statement;
         if (app()->isLocal()) {
             $this->cache->flush();
         }
+
+        $version = getVersion($version);
 
         return $this->cache->remember(
             $this->getCacheKey($path, $version),    // Key to store the cached data for requested data (as HTML).

@@ -17,10 +17,18 @@ return [
             'repo_url' => env('MARKDOWN_RAW_REPO_URL', 'https://raw.githubusercontent.com/sharanvelu/dockr-documentation/'),
         ],
         'cache' => [
-            'ttl' => env('MARKDOWN_CACHE_TTL', 60*60*24)
+            'ttl' => env('MARKDOWN_CACHE_TTL', 60 * 60 * 24)
         ],
         'empty' => [
             'error' => '## Error',
+        ],
+    ],
+
+    'version' => [
+        'list' => [
+            '0.1',
+            'temp',
+            'laravel'
         ],
     ],
 ];
