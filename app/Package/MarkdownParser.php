@@ -7,68 +7,79 @@ use Illuminate\Contracts\Cache\Repository as Cache;
 
 class MarkdownParser
 {
+    /**
+     * Cache Repository
+     *
+     * @var \Illuminate\Contracts\Foundation\Application|mixed
+     */
     protected $cache;
+
+    /**
+     * File System
+     *
+     * @var \Illuminate\Contracts\Foundation\Application|mixed
+     */
     protected $files;
+
+    /**
+     * ParseDown Class Instance
+     *
+     * @var Parsedown
+     */
+    protected $parser;
 
     public function __construct()
     {
         $this->cache = app(Cache::class);
         $this->files = app(Filesystem::class);
+        $this->parser = new Parsedown();
+
+        // todo : Remove this if statement;
+        if (app()->isLocal()) {
+            $this->cache->flush();
+        }
     }
 
     /**
      * Parse SideBar content from Markdown
      *
-     * @param $activePath
      * @param null $version
+     * @param $activePath
      * @return string
      */
-    public function parseSidebar($activePath, $version = null): string
+    public function parseSidebar($version, $activePath): string
     {
-        // todo : Remove this if statement;
-        if (app()->isLocal()) {
-            $this->cache->flush();
-        }
-
-        $path = 'documentation';
-        $version = getVersion($version);
+        $path = getSideBarPath();
 
         $content = $this->cache->remember(
-            $this->getCacheKey($path, $version),    // Key to store the cached data for requested data (as HTML).
+            $this->getCacheKey($version, $path),    // Key to store the cached data for requested data (as HTML).
             configEnv('markdown.cache.ttl'),    // Time to Live for cached data.
-            function () use ($path, $version) {
-                $markdown = $this->getMarkdownContent($path, $version);
+            function () use ($version, $path) {
+                $markdown = $this->getMarkdownContent($version, $path);
 
-                return (new Parsedown())->makeSideBar($markdown, $version);
+                return $this->parser->makeSideBar($version, $markdown);
             }
         );
 
-        return (new Parsedown())->addActiveSidebarItem($content, $activePath);
+        return $this->parser->addActiveSidebarItem($content, $activePath);
     }
 
     /**
      * Parse Page Content from Markdown
      *
+     * @param $version
      * @param $path
-     * @param null $version
      * @return mixed
      */
-    public function parse($path, $version = null)
+    public function parse($version, $path)
     {
-        // todo : Remove this if statement;
-        if (app()->isLocal()) {
-            $this->cache->flush();
-        }
-
-        $version = getVersion($version);
-
         return $this->cache->remember(
-            $this->getCacheKey($path, $version),    // Key to store the cached data for requested data (as HTML).
+            $this->getCacheKey($version, $path),    // Key to store the cached data for requested data (as HTML).
             configEnv('markdown.cache.ttl'),    // Time to Live for cached data.
-            function () use ($path, $version) {
-                $markdown = $this->getMarkdownContent($path, $version);
+            function () use ($version, $path) {
+                $markdown = $this->getMarkdownContent($version, $path);
 
-                return (new Parsedown())->make($markdown, $version);
+                return $this->parser->make($version, $markdown);
             }
         );
     }
@@ -77,10 +88,10 @@ class MarkdownParser
      * Get Key for Cache Storage.
      *
      * @param $path
-     * @param null $version
+     * @param $version
      * @return string
      */
-    private function getCacheKey($path, $version = null): string
+    private function getCacheKey($version, $path): string
     {
         $path = $version . '_' . $path;
 
@@ -92,13 +103,13 @@ class MarkdownParser
     }
 
     /**
-     * @param $path
      * @param $version
+     * @param $path
      * @return string
      */
-    public function getMarkdownContent($path, $version): string
+    public function getMarkdownContent($version, $path): string
     {
-        $markdownPath = $this->getMarkdownPath($path, $version);
+        $markdownPath = $this->getMarkdownPath($version, $path);
 
         return $this->files->get($markdownPath);
     }
@@ -106,11 +117,11 @@ class MarkdownParser
     /**
      * Get Markdown Path
      *
+     * @param $version
      * @param $path
-     * @param null $version
      * @return string
      */
-    private function getMarkdownPath($path, $version = null): string
+    private function getMarkdownPath($version, $path): string
     {
         $filename = getMarkdownFileName($path);
 

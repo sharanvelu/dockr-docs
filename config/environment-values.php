@@ -34,5 +34,6 @@ return [
 
     'path' => [
         'default' => 'introduction',
+        'sidebar' => 'documentation',
     ],
 ];

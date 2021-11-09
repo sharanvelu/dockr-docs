@@ -7,11 +7,11 @@ use App\Package\MarkdownParser;
 class DocumentController extends Controller
 {
     /**
-     * Sidebar Content Version
+     * Version
      *
      * @var
      */
-    private $sidebarVersion;
+    private $version;
 
     /**
      * The Content to be displayed if version or path does not exist.
@@ -41,46 +41,46 @@ class DocumentController extends Controller
      */
     public function show($version, $path)
     {
-        $this->pathExist($path, $version);
+        $this->version = $version;
 
-        $sidebarContent = $this->parser->parseSidebar($path, $this->sidebarVersion ?? $version);
+        $this->checkVersion();
 
-        $content = $this->content ?? $this->parser->parse($path, $version);
+        if ($version !== $this->version) {
+            return redirect(getDocsRoute($this->version, $path));
+        }
 
-        return view('docs.show', compact('content', 'sidebarContent', 'version'));
+        $this->checkPath($path);
+
+        $sidebarContent = $this->parser->parseSidebar($version, $path);
+
+        $content = $this->content ?? $this->parser->parse($version, $path);
+
+        return view('docs.show', compact('version', 'content', 'sidebarContent'));
     }
 
     /**
      * Check if the version exists.
-     * If not, return not found page
+     * If not, Set default version.
      *
-     * @param $version
-     * @return bool
+     * @return void
      */
-    private function versionExist($version): bool
+    private function checkVersion()
     {
-        if (in_array($version, getVersionList())) {
-            return true;
+        if (!in_array($this->version, getVersionList())) {
+            $this->version = getDefaultVersion();
         }
-
-        $this->sidebarVersion = getDefaultVersion();
-        $this->content = view('docs.not-found.version');
-
-        return false;
     }
 
     /**
      * Check if the file exists.
-     * If not, return not found page
+     * If not, return not found page.
      *
      * @param $path
-     * @param $version
      * @return void
      */
-    private function pathExist($path, $version)
+    private function checkPath($path)
     {
-        if ($this->versionExist($version) && !file_exists(markdown_path($version, getMarkdownFileName($path)))) {
-            $this->sidebarVersion = getDefaultVersion();
+        if (!file_exists(markdown_path($this->version, $path))) {
             $this->content = view('docs.not-found.path');
         }
     }

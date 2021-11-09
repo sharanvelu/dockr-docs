@@ -103,8 +103,9 @@ function getVersionList()
  */
 function markdown_path($version = null, $path = null): string
 {
+    $fileName = getMarkdownFileName($path);
     return base_path(
-        implode('/', ['markdown', $version, $path])
+        implode('/', ['markdown', $version, $fileName])
     );
 }
 
@@ -121,4 +122,9 @@ function getMarkdownFileName($path): string
     }
 
     return strtolower($path) . '.md';
+}
+
+function getSideBarPath()
+{
+    return configEnv('path.sidebar');
 }

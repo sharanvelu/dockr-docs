@@ -8,11 +8,11 @@ use ParsedownExtra;
 class Parsedown extends ParsedownExtra
 {
     /**
-     * @param $markdown
      * @param $version
+     * @param $markdown
      * @return string
      */
-    public function make($markdown, $version): string
+    public function make($version, $markdown): string
     {
         $text = parent::text($markdown);
 
@@ -62,11 +62,11 @@ class Parsedown extends ParsedownExtra
     /**
      * Make Sidebar content
      *
-     * @param $markdown
      * @param $version
+     * @param $markdown
      * @return string
      */
-    public function makeSideBar($markdown, $version): string
+    public function makeSideBar($version, $markdown): string
     {
         $text = parent::text($markdown);
 
