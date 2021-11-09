@@ -60,12 +60,13 @@ class Parsedown extends ParsedownExtra
     }
 
     /**
+     * Make Sidebar content
+     *
      * @param $markdown
      * @param $version
-     * @param $activePath
      * @return string
      */
-    public function makeSideBar($markdown, $version, $activePath): string
+    public function makeSideBar($markdown, $version): string
     {
         $text = parent::text($markdown);
 
@@ -73,25 +74,46 @@ class Parsedown extends ParsedownExtra
 
         $text = $this->replaceLinks($version, $text);
 
-        return $this->addListItemClass($text, $activePath);
+        return $this->addListItemClass($text);
     }
 
-    public function addListItemClass(string $text, $activePath = null): string
+    /**
+     * Add class names for Sidebar Html tags
+     *
+     * @param string $text
+     * @return string
+     */
+    public function addListItemClass(string $text): string
     {
         $lines = explode("\n", $text);
-        $isActivePathAdded = false;
 
         foreach ($lines as $number => $line) {
             preg_match('/<li>([a-zA-z\s]+)/', $line, $matches);
             if (isset($matches[1])) {
                 $lines[$number] = '<li class="nav-item"><a class="nav-link has-dropdown" href="#">' . $matches[1] . '</a>';
             }
-            unset($matches);
+        }
 
+        return str_replace('<ul>', '<ul class="nav flex-column">', implode("\n", $lines));
+    }
+
+    /**
+     * Add "active" class to SideBar entry
+     *
+     * @param string $text
+     * @param $activePath
+     * @return string
+     */
+    public function addActiveSidebarItem(string $text, $activePath): string
+    {
+        $lines = explode("\n", $text);
+        $isActivePathAdded = false;
+
+        foreach ($lines as $number => $line) {
             preg_match('/<li><a href="(.+)<\/a><\/li>/', $line, $matches);
             if (isset($matches[1])) {
                 $activeClass = '';
-                if (Str::contains($matches[1], './' . $activePath) && !$isActivePathAdded) {
+                if (!$isActivePathAdded && Str::contains($matches[1], './' . $activePath)) {
                     $activeClass = ' active';
                     $isActivePathAdded = true;
                 }
@@ -99,6 +121,6 @@ class Parsedown extends ParsedownExtra
             }
         }
 
-        return str_replace('<ul>', '<ul class="nav flex-column">', implode("\n", $lines));
+        return implode("\n", $lines);
     }
 }

@@ -49,9 +49,76 @@ function getVersion($version)
 /**
  * Get Default Version
  *
- * @return \Illuminate\Config\Repository|mixed
+ * @return mixed
  */
 function getDefaultVersion()
 {
-    return configEnv('version.list')[0];
+    return configEnv('version.default');
+}
+
+/**
+ * Get Default Path
+ *
+ * @return mixed
+ */
+function getDefaultPath()
+{
+    return configEnv('path.default');
+}
+
+/**
+ * Get Route URL for Given Docs Version and Path
+ *
+ * @param null $version
+ * @param null $path
+ * @return string
+ */
+function getDocsRoute($version = null, $path = null): string
+{
+    $version = $version ?? getDefaultVersion();
+    $path = $path ?? getDefaultPath();
+
+    return route('docs.show', [
+        'version' => $version,
+        'path' => $path
+    ]);
+}
+
+/**
+ * Get the available Version  List
+ *
+ * @return \Illuminate\Config\Repository|mixed
+ */
+function getVersionList()
+{
+    return configEnv('version.list');
+}
+
+/**
+ * Get Markdown Path
+ *
+ * @param null $version
+ * @param null $path
+ * @return string
+ */
+function markdown_path($version = null, $path = null): string
+{
+    return base_path(
+        implode('/', ['markdown', $version, $path])
+    );
+}
+
+/**
+ * Get Markdown File Name for given Path
+ *
+ * @param $path
+ * @return string
+ */
+function getMarkdownFileName($path): string
+{
+    if (\Illuminate\Support\Str::endsWith($path, '.md')) {
+        return $path;
+    }
+
+    return strtolower($path) . '.md';
 }

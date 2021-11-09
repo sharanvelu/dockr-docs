@@ -16,7 +16,14 @@ class MarkdownParser
         $this->files = app(Filesystem::class);
     }
 
-    public function parseSidebar($activePath, $version = null)
+    /**
+     * Parse SideBar content from Markdown
+     *
+     * @param $activePath
+     * @param null $version
+     * @return string
+     */
+    public function parseSidebar($activePath, $version = null): string
     {
         // todo : Remove this if statement;
         if (app()->isLocal()) {
@@ -26,18 +33,27 @@ class MarkdownParser
         $path = 'documentation';
         $version = getVersion($version);
 
-        return $this->cache->remember(
+        $content = $this->cache->remember(
             $this->getCacheKey($path, $version),    // Key to store the cached data for requested data (as HTML).
             configEnv('markdown.cache.ttl'),    // Time to Live for cached data.
-            function () use ($path, $version, $activePath) {
+            function () use ($path, $version) {
                 $markdown = $this->getMarkdownContent($path, $version);
 
-                return (new Parsedown())->makeSideBar($markdown, $version, $activePath);
+                return (new Parsedown())->makeSideBar($markdown, $version);
             }
         );
+
+        return (new Parsedown())->addActiveSidebarItem($content, $activePath);
     }
 
-    public function parse($path, $version = null, $isSideBar = false)
+    /**
+     * Parse Page Content from Markdown
+     *
+     * @param $path
+     * @param null $version
+     * @return mixed
+     */
+    public function parse($path, $version = null)
     {
         // todo : Remove this if statement;
         if (app()->isLocal()) {
@@ -49,12 +65,8 @@ class MarkdownParser
         return $this->cache->remember(
             $this->getCacheKey($path, $version),    // Key to store the cached data for requested data (as HTML).
             configEnv('markdown.cache.ttl'),    // Time to Live for cached data.
-            function () use ($path, $version, $isSideBar) {
+            function () use ($path, $version) {
                 $markdown = $this->getMarkdownContent($path, $version);
-
-                if ($isSideBar) {
-                    return (new Parsedown())->makeSideBar($markdown, $version);
-                }
 
                 return (new Parsedown())->make($markdown, $version);
             }
@@ -92,7 +104,7 @@ class MarkdownParser
     }
 
     /**
-     * Get Key for Cache Storage.
+     * Get Markdown Path
      *
      * @param $path
      * @param null $version
@@ -100,19 +112,8 @@ class MarkdownParser
      */
     private function getMarkdownPath($path, $version = null): string
     {
-        $filename = $this->getMarkdownFileName($path);
+        $filename = getMarkdownFileName($path);
 
-        return base_path("markdown/$version/$filename");
-    }
-
-    /**
-     * Get Markdown FileName from path
-     *
-     * @param $path
-     * @return string
-     */
-    public function getMarkdownFileName($path): string
-    {
-        return strtolower($path) . '.md';
+        return markdown_path($version, $filename);
     }
 }

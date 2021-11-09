@@ -26,9 +26,13 @@ return [
 
     'version' => [
         'list' => [
-            '0.1',
-            'temp',
+            'v0.1',
             'laravel'
         ],
+        'default' => 'v0.1',
+    ],
+
+    'path' => [
+        'default' => 'introduction',
     ],
 ];
