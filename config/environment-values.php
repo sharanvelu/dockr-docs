@@ -27,7 +27,6 @@ return [
     'version' => [
         'list' => [
             'v0.1',
-            'laravel'
         ],
         'default' => 'v0.1',
     ],
