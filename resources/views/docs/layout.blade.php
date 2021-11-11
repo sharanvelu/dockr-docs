@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
     <link href="{{ $appIcon  }}" rel="icon"/>
-    <title>Documentation | Your ThemeForest item Name</title>
+    <title>{{ $appName }}</title>
     <meta name="author" content="sharanvelu">
     <meta name="description" content="Documentation For Dockr">
 
@@ -55,8 +55,7 @@
 </div>
 <!-- Document Wrapper end -->
 
-<!-- Back To Top -->
-<a id="back-to-top" data-toggle="tooltip" title="Back to Top" href="javascript:void(0)"><i class="fa fa-chevron-up"></i></a>
+<x-back_to_top></x-back_to_top>
 
 <!-- JavaScript -->
 <script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
