@@ -18,6 +18,8 @@ class Parsedown extends ParsedownExtra
 
         $text = $this->addAnchorToHeaders($text);
 
+        $text = $this->addClassToTags($text);
+
         return $this->replaceLinks($version, $text);
     }
 
@@ -122,5 +124,19 @@ class Parsedown extends ParsedownExtra
         }
 
         return implode("\n", $lines);
+    }
+
+    /**
+     * Add classes to some HTML Tags
+     *
+     * @param $text
+     * @return string
+     */
+    public function addClassToTags($text)
+    {
+        // Class Name to Table
+        $text = str_replace('<table>', '<table class="table table-bordered">', $text);
+
+        return $text;
     }
 }

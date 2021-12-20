@@ -6,7 +6,7 @@ if [ ! -f composer.json ]; then
 fi
 
 DOCUMENTATION_VERSIONS=(
-  v0.1
+  v1.1
 )
 
 for v in "${DOCUMENTATION_VERSIONS[@]}"; do

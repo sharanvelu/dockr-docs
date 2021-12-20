@@ -14,3 +14,26 @@
 #markdown_content blockquote p {
     margin: 10px;
 }
+
+.sidebar-links {
+    height: 50px;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    width: inherit;
+    background: inherit;
+}
+
+a.repo-link-icon {
+    padding: .5rem !important;
+}
+
+a.repo-link-icon > img {
+    width: 20px;
+    height: 20px;
+}
+
+.docker-hub-logo {
+    width: 30px !important;
+}
+
