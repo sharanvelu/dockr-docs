@@ -10,7 +10,7 @@ $(function () {
     // Add Active class to sidebar dropdown element
     let dropdownElement = $('li.nav-item ul.nav a.nav-link.active').parent().parent().parent().children('a.nav-link.has-dropdown');
     if (dropdownElement.length > 0) {
-        dropdownElement.addClass('active');
+        dropdownElement.addClass('active dropdown-open');
     }
 
     // Version Toggle
@@ -40,4 +40,9 @@ $(function () {
         }
     });
     if (window.location.hash) loadHash(window.location.hash);
+
+    // DropDown Animation
+    $('a.nav-link.has-dropdown').on('click', function () {
+        $(this).toggleClass('dropdown-open');
+    });
 });
