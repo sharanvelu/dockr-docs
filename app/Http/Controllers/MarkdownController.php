@@ -17,7 +17,7 @@ class MarkdownController extends Controller
         $passkey = $request->get('passkey');
         if (isset($passkey)) {
             if (Hash::check($passkey, env('MARKDOWN_REFRESH_PASSKEY'))) {
-                shell_exec('cd ' . base_path() . ' && sudo markdown/get.sh');
+                info(shell_exec('cd ' . base_path() . ' && sudo markdown/get.sh'));
                 cache()->flush();
 
                 return 'Executed Successful';
