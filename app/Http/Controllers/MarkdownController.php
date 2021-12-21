@@ -9,19 +9,8 @@ use Illuminate\Support\Facades\Hash;
 class MarkdownController extends Controller
 {
     /**
-     * Cache Repository
-     *
-     * @var \Illuminate\Contracts\Foundation\Application|mixed
-     */
-    protected $cache;
-
-    public function __construct()
-    {
-        $this->cache = app(Cache::class);
-    }
-
-    /**
      * Update Markdown using compose Command
+     * @throws \Exception
      */
     public function refresh(Request $request)
     {
@@ -29,7 +18,7 @@ class MarkdownController extends Controller
         if (isset($passkey)) {
             if (Hash::check($passkey, env('MARKDOWN_REFRESH_PASSKEY'))) {
                 shell_exec('cd ' . base_path() . ' && sudo markdown/get.sh');
-                $this->cache->flush();
+                cache()->flush();
 
                 return 'Executed Successful';
             }
