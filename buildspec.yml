@@ -3,29 +3,26 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      php: 8.0
+      docker: 19
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR....
-      - aws --version
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 696088320052.dkr.ecr.ap-south-1.amazonaws.com
-      - REPOSITORY_URI="696088320052.dkr.ecr.ap-south-1.amazonaws.com/docs/testing"
-      - IMAGE_TAG="1.0"
+      - echo "moving into build phase"
   build:
     commands:
       - echo Build started on `date`
-      - echo installing composer..
-      - composer install
-      - echo creating .env file..
-      - cp .env.example .env
-      - echo generating app key
-      - php artisan key:generate
       - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker build -t ${ECR_REPOSITORY_URL}:${CODEBUILD_RESOLVED_SOURCE_VERSION} .
+      - echo Build completed on `date`
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 696088320052.dkr.ecr.ap-south-1.amazonaws.com
+      - echo Pushing the Docker image...
+      - docker push ${ECR_REPOSITORY_URL}:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - composer install
   post_build:
     commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker image...
-      - docker image ls -a
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      #- bash -c "if [ /"$CODEBUILD_BUILD_SUCCEEDING/" == /"0/" ]; then exit 1; fi"
+      - echo "ImageID:" ${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - export IMAGE_ID=${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - echo $IMAGE_ID
+      #      - bash ./deploy-ecs.sh
+      - echo "Successfully finished Deploying!!"
