@@ -10,7 +10,7 @@ phases:
       - aws --version
       # login to Elastic container registry
       - eval $(aws ecr get-login --region ap-south-1 --no-include-email | sed 's|https://||')
-      - REPOSITORY_URI="696088320052.dkr.ecr.ap-south-1.amazonaws.com/dockr/docs"
+      - REPOSITORY_URI="696088320052.dkr.ecr.ap-south-1.amazonaws.com/docs/testing"
       - IMAGE_TAG="1.0"
   build:
     commands:
