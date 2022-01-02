@@ -19,5 +19,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('docs/{version}/{path}', [DocumentController::class, 'show'])->name('docs.show');
-
-Route::get('markdown/refresh', [MarkdownController::class, 'refresh'])->name('markdown.refresh');
