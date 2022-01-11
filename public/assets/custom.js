@@ -19,7 +19,7 @@ $(function () {
         if (option.data('page') !== 'current') {
             window.location.href = option.data('url');
         }
-    });
+    }).niceSelect();
 
     // Animate Scroll to Heading
     function loadHash(hashObj) {
