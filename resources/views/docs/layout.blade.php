@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="{{ asset('template/css/stylesheet.css') }}"/>
     <!-- Accent Color -->
     <link rel="stylesheet" href="{{ asset('template/css/color-cyan.css') }}"/>
+    <!-- Nice Select Dropdown -->
+    <link rel="stylesheet" href="{{ asset('plugins/nice-select/nice-select.css') }}"/>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/custom.css') }}"/>
 </head>
@@ -66,6 +68,8 @@
 <script src="{{ asset('template/vendor/jquery.easing/jquery.easing.min.js') }}"></script>
 <!-- Magnific Popup -->
 <script src="{{ asset('template/vendor/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+<!-- Nice Select Dropdown -->
+<script src="{{ asset('plugins/nice-select/jquery.nice-select.min.js') }}"></script>
 <!-- Template Custom Script -->
 <script src="{{ asset('template/js/theme.js') }}"></script>
 <!-- Custom Scripts -->
