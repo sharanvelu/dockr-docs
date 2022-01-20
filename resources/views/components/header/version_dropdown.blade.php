@@ -7,7 +7,7 @@
                     selected
                     data-page="current"
                     @endif
-                    data-url="{{ getDocsRoute($version) }}"
+                    data-url="{{ getDocsRoute($version, request()->route('path')) }}"
             >{{ $version }}</option>
         @endforeach
     </select>
