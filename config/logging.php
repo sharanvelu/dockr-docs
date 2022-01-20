@@ -62,6 +62,14 @@ return [
             'level' => env('LOG_LEVEL', 'info'),
         ],
 
+        'docker_hub' => [
+            'driver' => 'slack',
+            'url' => env('SLACK_DOCKER_HUB_WEBHOOK'),
+            'username' => 'Laravel Log',
+            'emoji' => ':boom:',
+            'level' => env('LOG_LEVEL', 'info'),
+        ],
+
         'papertrail' => [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
