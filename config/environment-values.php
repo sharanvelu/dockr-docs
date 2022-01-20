@@ -42,8 +42,9 @@ return [
     'version' => [
         'list' => [
             'v1.1',
+            'v1.2',
         ],
-        'default' => 'v1.1',
+        'default' => 'v1.2',
     ],
 
     /*

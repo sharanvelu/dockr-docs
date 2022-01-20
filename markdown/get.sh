@@ -7,6 +7,7 @@ fi
 
 DOCUMENTATION_VERSIONS=(
   v1.1
+  v1.2
 )
 
 for v in "${DOCUMENTATION_VERSIONS[@]}"; do
