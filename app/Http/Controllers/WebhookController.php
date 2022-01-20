@@ -11,16 +11,19 @@ class WebhookController extends Controller
     protected function dockerHub(Request $request)
     {
         $response = json_decode(json_encode($request->all()), -1);
+        $pushData = $response['push_data'];
         $repo = $response['repository'];
 
         $data = [
             'image' => [
-                'images' => $response['push_data']['images'],
-                'pushed_at' => Carbon::parse($response['push_data']['pushed_at'])->format('d-m-Y'),
+                'images' => $pushData['images'],
+                'tag' => $pushData['tag'],
+                'pushed_at' => Carbon::parse($pushData['pushed_at'])
+                    ->timezone('Asia/Kolkata')
+                    ->format('d-m-Y H:i:s'),
+                'pushed_by' => $pushData['pusher'],
             ],
             'repo' => [
-                'name' => $repo['name'],
-                'namespace' => $repo['name'],
                 'owner' => $repo['owner'],
                 'repo_name' => $repo['repo_name'],
                 'repo_url' => $repo['repo_url'],
@@ -29,7 +32,9 @@ class WebhookController extends Controller
             ]
         ];
 
-        Log::channel('docker_hub')->info('Docker Hub', $data);
+        if (!(is_null($pushData['tag'] ?? null))) {
+            Log::channel('docker_hub')->info('Image Pushed', $data);
+        }
 
         return response()->json([], 200);
     }
