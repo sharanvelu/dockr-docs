@@ -23,5 +23,5 @@ phases:
       - echo "ImageID:" ${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - export IMAGE_ID=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - echo $IMAGE_ID
-      - bash ./deploy-ecs.sh
+      - bash ./docker-deployment/deploy-ecs.sh
       - echo "Successfully finished Deploying!!"
