@@ -20,6 +20,7 @@ IMGAGE_PACEHOLDER="<IMG>"
 ENVFILE_PACEHOLDER="<envfile>"
 CPU_PACEHOLDER="<cpu>"
 MEMORY_PACEHOLDER="<memory>"
+MEMORY_RES_PACEHOLDER="<memory-reservation>"
 CONTAINER_NAME_PACEHOLDER="<container-name>"
 AWS_LOG_GROUP_PACEHOLDER="<aws-log-group>"
 
