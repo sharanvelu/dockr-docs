@@ -11,7 +11,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo installing composer..
+      - echo installing composer...
       - composer install
       - echo Building the Docker image...
       - docker build -t ${ECR_REPOSITORY_URL}:${CODEBUILD_RESOLVED_SOURCE_VERSION} .
@@ -20,8 +20,7 @@ phases:
       - docker push ${ECR_REPOSITORY_URL}:${CODEBUILD_RESOLVED_SOURCE_VERSION}
   post_build:
     commands:
-      - echo "ImageID:" ${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - export IMAGE_ID=${CODEBUILD_RESOLVED_SOURCE_VERSION}
-      - echo $IMAGE_ID
+      - echo "ImageID : ${IMAGE_ID}"
       - bash ./docker-deployment/deploy-ecs.sh
       - echo "Successfully finished Deploying!!"
