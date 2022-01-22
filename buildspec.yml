@@ -21,6 +21,6 @@ phases:
   post_build:
     commands:
       - export IMAGE_ID=${CODEBUILD_RESOLVED_SOURCE_VERSION}
-      - echo "ImageID : ${IMAGE_ID}"
+      - echo "ImageID\ :\ ${IMAGE_ID}"
       - bash ./docker-deployment/deploy-ecs.sh
       - echo "Successfully finished Deploying!!"
