@@ -48,5 +48,8 @@ if [ -n "$TASK_VERSION" ]; then
 
 else
     echo "exit: No task definition"
+    echo "Deleting the created Image..."
+    OUTPUT=$(aws ecr --repository-name ${ECR_REPO_NAME} --image-ids imageTag=${IMG_VERSION})
+    echo "Created Image deleted..."
     exit;
 fi
