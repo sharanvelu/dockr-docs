@@ -1,0 +1,45 @@
+[
+    {
+        "environmentFiles": [
+            {
+                "type": "s3",
+                "value": "<envfile>"
+            }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "<aws-log-group>",
+                "awslogs-region": "ap-south-1",
+                "awslogs-stream-prefix": "KDB-Application-logs"
+            }
+        },
+        "entryPoint": [
+            "entrypoint.sh"
+        ],
+        "portMappings": [
+            {
+                "hostPort": 0,
+                "protocol": "tcp",
+                "containerPort": 80
+            },
+            {
+                "hostPort": 0,
+                "protocol": "tcp",
+                "containerPort": 443
+            }
+        ],
+        "command": [
+            "/usr/bin/supervisord",
+            "-c",
+            "/etc/supervisord.conf"
+        ],
+        "memoryReservation": <memory-reservation>,
+        "cpu": <cpu>,
+        "memory": <memory>,
+        "workingDirectory": "/var/www/html",
+        "image": "<IMG>",
+        "essential": true,
+        "name": "<container-name>"
+    }
+]
