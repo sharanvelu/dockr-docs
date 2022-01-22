@@ -32,9 +32,11 @@ CONTAINER_DEFINITION="${CONTAINER_DEFINITION//$ENVFILE_PACEHOLDER/$ENVFILE}"
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//$CPU_PACEHOLDER/$CPUENV}"
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//$MEMORY_PACEHOLDER/$MEMORYENV}"
 
+echo "${CONTAINER_DEFINITION}"
+
 #echo "Source Version: " $CODEBUILD_RESOLVED_SOURCE_VERSION
 #echo "commit ID: " $(git rev-parse automated_deployment_in_ECS)
-export TASK_VERSION=$(aws ecs register-task-definition --family ${TASK_FAMILY} --container-definitions "$CONTAINER_DEFINITION" --execution-role-arn $TASK_ROLE_ARN --task-role-arn $TASK_ROLE_ARN --network-mode bridge --requires-compatibilities EC2 --tags key="commit",value=$CODEBUILD_RESOLVED_SOURCE_VERSION | jq --raw-output '.taskDefinition.revision')
+export TASK_VERSION=$(aws ecs register-task-definition --family ${TASK_FAMILY} --container-definitions "${CONTAINER_DEFINITION}" --execution-role-arn $TASK_ROLE_ARN --task-role-arn $TASK_ROLE_ARN --network-mode bridge --requires-compatibilities EC2 --tags key="commit",value=$CODEBUILD_RESOLVED_SOURCE_VERSION | jq --raw-output '.taskDefinition.revision')
 echo "Registered ECS Task Definition: " $TASK_VERSION
 
 
