@@ -44,7 +44,7 @@ if [ -n "$TASK_VERSION" ]; then
     echo "Task Definition: " $TASK_FAMILY:$TASK_VERSION
 
     DEPLOYED_SERVICE=$(aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $TASK_FAMILY:$TASK_VERSION --force-new-deployment | jq --raw-output '.service.serviceName')
-    echo "Deployment of $DEPLOYED_SERVICE complete!!"
+    echo "Deployment of service \"$DEPLOYED_SERVICE\" complete!!"
 
 else
     echo "exit: No task definition"

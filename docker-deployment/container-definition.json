@@ -6,14 +6,6 @@
                 "value": "<envfile>"
             }
         ],
-        "logConfiguration": {
-            "logDriver": "awslogs",
-            "options": {
-                "awslogs-group": "<aws-log-group>",
-                "awslogs-region": "ap-south-1",
-                "awslogs-stream-prefix": "KDB-Application-logs"
-            }
-        },
         "entryPoint": [
             "entrypoint.sh"
         ],
@@ -30,9 +22,7 @@
             }
         ],
         "command": [
-            "/usr/bin/supervisord",
-            "-c",
-            "/etc/supervisord.conf"
+            "/usr/sbin/apache2ctl", "-D", "FOREGROUND"
         ],
         "memoryReservation": <memory-reservation>,
         "cpu": <cpu>,
