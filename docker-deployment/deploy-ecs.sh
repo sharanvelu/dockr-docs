@@ -12,9 +12,9 @@ IMAGE=${ECR_REPOSITORY_URL}:${IMG_VERSION}
 ENVFILE=${ENVFILE_S3}
 
 
-echo $AWS_LOG_GROUP
-echo $CONTAINER_NAME
-echo $TASK_ROLE_ARN
+echo "AWS Log Group : ${AWS_LOG_GROUP}"
+echo "Container Name : ${CONTAINER_NAME}"
+echo "Task Role ARN : ${TASK_ROLE_ARN}"
 
 IMGAGE_PACEHOLDER="<IMG>"
 ENVFILE_PACEHOLDER="<envfile>"
@@ -31,12 +31,9 @@ CONTAINER_DEFINITION="${CONTAINER_DEFINITION//$CONTAINER_NAME_PACEHOLDER/$CONTAI
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//$ENVFILE_PACEHOLDER/$ENVFILE}"
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//$CPU_PACEHOLDER/$CPUENV}"
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//$MEMORY_PACEHOLDER/$MEMORYENV}"
+CONTAINER_DEFINITION="${CONTAINER_DEFINITION//$MEMORY_RES_PACEHOLDER/$MEMORYRES}"
 
-echo "${CONTAINER_DEFINITION}"
-
-#echo "Source Version: " $CODEBUILD_RESOLVED_SOURCE_VERSION
-#echo "commit ID: " $(git rev-parse automated_deployment_in_ECS)
-export TASK_VERSION=$(aws ecs register-task-definition --family ${TASK_FAMILY} --container-definitions "${CONTAINER_DEFINITION}" --execution-role-arn $TASK_ROLE_ARN --task-role-arn $TASK_ROLE_ARN --network-mode bridge --requires-compatibilities EC2 --tags key="commit",value=$CODEBUILD_RESOLVED_SOURCE_VERSION | jq --raw-output '.taskDefinition.revision')
+export TASK_VERSION=$(aws ecs register-task-definition --family ${TASK_FAMILY} --container-definitions "${CONTAINER_DEFINITION}" --execution-role-arn ${TASK_ROLE_ARN} --task-role-arn ${TASK_ROLE_ARN} --network-mode bridge --requires-compatibilities EC2 --tags key="commit",value=$CODEBUILD_RESOLVED_SOURCE_VERSION | jq --raw-output '.taskDefinition.revision')
 echo "Registered ECS Task Definition: " $TASK_VERSION
 
 
