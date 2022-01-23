@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if (!$this->app->isLocal()) {
+            // Force HTTPS for assets loading
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+            $this->app['request']->server->set('HTTPS', true);
+        }
     }
 }
