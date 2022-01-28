@@ -23,6 +23,10 @@
                         </a>
                     </h1>
                 </div>
+                <div class="lights-toggle">
+                    <input id="lights-toggle" type="checkbox" name="lights-toggle" class="switch" checked="checked">
+                    <label for="lights-toggle" class="text-xs"></label>
+                </div>
             </div>
         </div>
     </header>
@@ -36,10 +40,6 @@
                         <p class="hero-paragraph">Our package lets your Laravel projects run with Docker seamlessly for Local development environment.</p>
                         <div class="hero-cta">
                             <a class="button button-primary" href="{{ getDocsRoute(null, 'installation') }}">Get it now</a>
-{{--                            <div class="lights-toggle">--}}
-{{--                                <input id="lights-toggle" type="checkbox" name="lights-toggle" class="switch" checked="checked">--}}
-{{--                                <label for="lights-toggle" class="text-xs"><span>Turn me <span class="label-text">dark</span></span></label>--}}
-{{--                            </div>--}}
                         </div>
                     </div>
                     <div class="hero-media">
