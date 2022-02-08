@@ -27,13 +27,19 @@ class CheckRequests
      *
      * @param Request $request
      * @return void
+     * @throws \Exception
      */
     public function checkForReferences(Request $request)
     {
-        if ($request->get('ref')) {
+        $reference = $request->get('ref');
+        if ($reference) {
+            $cacheKey = 'web_ref_count_' . $reference;
+
+            cache()->increment($cacheKey);
             Log::channel('slack')->info('Website Referenced', [
                 'Time' => now()->format('d M Y - H:i:s A'),
-                'Referenced From' => $request->get('ref'),
+                'Referenced From' => $reference,
+                'Count (Approx)' => cache()->get($cacheKey),
             ]);
         }
     }
