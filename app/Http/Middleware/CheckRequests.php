@@ -37,8 +37,12 @@ class CheckRequests
 
             cache()->increment($cacheKey);
             Log::channel('slack')->info('Website Referenced', [
-                'Time' => now()->format('d M Y - H:i:s A'),
                 'Referenced From' => $reference,
+                'data' => [
+                    'IP Address' => $request->getClientIp(),
+                    'Time' => now()->format('d M Y - H:i:s A'),
+                    'User Agent' => $request->userAgent(),
+                ],
                 'Count (Approx)' => cache()->get($cacheKey),
             ]);
         }
