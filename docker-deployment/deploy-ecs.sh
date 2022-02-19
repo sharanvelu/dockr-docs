@@ -5,10 +5,10 @@ set -e
 IMAGE="${ECR_REPOSITORY_URL}:${IMAGE_ID}"
 
 echo ""
-echo -e "\nAWS Log Group : ${AWS_LOG_GROUP}"
+echo -e "AWS Log Group  : ${AWS_LOG_GROUP}"
 echo -e "Container Name : ${CONTAINER_NAME}"
-echo -e "Task Role ARN : ${TASK_ROLE_ARN}"
-echo -e "Image URI : ${IMAGE}\n"
+echo -e "Task Role ARN  : ${TASK_ROLE_ARN}"
+echo -e "Image URI      : ${IMAGE}\n"
 
 IMAGE_PLACEHOLDER="<img>"
 ENV_FILE_PLACEHOLDER="<env-file>"
@@ -27,8 +27,6 @@ CONTAINER_DEFINITION="${CONTAINER_DEFINITION//${ENV_FILE_PLACEHOLDER}/${ENV_FILE
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//${CPU_PLACEHOLDER}/${CPU}}"
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//${MEMORY_PLACEHOLDER}/${MEMORY}}"
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//${MEMORY_RES_PLACEHOLDER}/${MEMORY_RES}}"
-
-echo -e "\n\n\n${CONTAINER_DEFINITION}\n\n\n"
 
 export TASK_VERSION=$(aws ecs register-task-definition --family ${TASK_DEFINITION} --container-definitions "${CONTAINER_DEFINITION}" --execution-role-arn ${TASK_ROLE_ARN} --task-role-arn ${TASK_ROLE_ARN} --network-mode bridge --requires-compatibilities EC2 --tags key="commit",value=$IMAGE_ID | jq --raw-output '.taskDefinition.revision')
 echo -e "Registered ECS Task Definition Version: ${TASK_VERSION}\n"
