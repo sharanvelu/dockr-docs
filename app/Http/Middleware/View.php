@@ -10,8 +10,8 @@ class View
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -19,6 +19,15 @@ class View
         view()->share([
             'appLogo' => asset('logo/half.png'),
             'appIcon' => asset('logo/small.ico'),
+            'appName' => config('app.name'),
+
+            // Dockr Repo Links
+            'dockrGithub' => configEnv('dockr.github'),
+            'dockrDockerHub' => configEnv('dockr.docker_hub'),
+
+            // Repo Logo
+            'githubLogo' => asset('logo/others/github.png'),
+            'dockerHubLogo' => asset('logo/others/docker_hub.png'),
         ]);
 
         return $next($request);
