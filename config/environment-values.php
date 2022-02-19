@@ -53,7 +53,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'path' => [
-        'default' => 'introduction',
+        'default' => 'installation',
         'sidebar' => 'documentation',
     ],
 ];
