@@ -2,15 +2,13 @@
 
 set -e
 
-echo "Image Id from build spec : ${IMAGE_ID}"
+IMAGE="${ECR_REPOSITORY_URL}:${IMAGE_ID}"
 
-IMG_VERSION="${CODEBUILD_RESOLVED_SOURCE_VERSION}"
-IMAGE="${ECR_REPOSITORY_URL}:${IMG_VERSION}"
-
-echo "AWS Log Group : ${AWS_LOG_GROUP}"
-echo "Container Name : ${CONTAINER_NAME}"
-echo "Task Role ARN : ${TASK_ROLE_ARN}"
-echo "Image : ${IMAGE}"
+echo ""
+echo -e "\nAWS Log Group : ${AWS_LOG_GROUP}"
+echo -e "Container Name : ${CONTAINER_NAME}"
+echo -e "Task Role ARN : ${TASK_ROLE_ARN}"
+echo -e "Image URI : ${IMAGE}\n"
 
 IMAGE_PLACEHOLDER="<img>"
 ENV_FILE_PLACEHOLDER="<env-file>"
@@ -19,7 +17,6 @@ MEMORY_PLACEHOLDER="\"<memory>\""
 MEMORY_RES_PLACEHOLDER="\"<memory-reservation>\""
 CONTAINER_NAME_PLACEHOLDER="<container-name>"
 AWS_LOG_GROUP_PLACEHOLDER="<aws-log-group>"
-
 
 CONTAINER_DEFINITION_FILE=$(cat docker-deployment/container-definition.json)
 
@@ -31,17 +28,19 @@ CONTAINER_DEFINITION="${CONTAINER_DEFINITION//${CPU_PLACEHOLDER}/${CPU}}"
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//${MEMORY_PLACEHOLDER}/${MEMORY}}"
 CONTAINER_DEFINITION="${CONTAINER_DEFINITION//${MEMORY_RES_PLACEHOLDER}/${MEMORY_RES}}"
 
-export TASK_VERSION=$(aws ecs register-task-definition --family ${TASK_DEFINITION} --container-definitions "${CONTAINER_DEFINITION}" --execution-role-arn ${TASK_ROLE_ARN} --task-role-arn ${TASK_ROLE_ARN} --network-mode bridge --requires-compatibilities EC2 --tags key="commit",value=$CODEBUILD_RESOLVED_SOURCE_VERSION | jq --raw-output '.taskDefinition.revision')
-echo "Registered ECS Task Definition Version: ${TASK_VERSION}"
+echo -e "\n\n\n${CONTAINER_DEFINITION}\n\n\n"
+
+export TASK_VERSION=$(aws ecs register-task-definition --family ${TASK_DEFINITION} --container-definitions "${CONTAINER_DEFINITION}" --execution-role-arn ${TASK_ROLE_ARN} --task-role-arn ${TASK_ROLE_ARN} --network-mode bridge --requires-compatibilities EC2 --tags key="commit",value=$IMAGE_ID | jq --raw-output '.taskDefinition.revision')
+echo -e "Registered ECS Task Definition Version: ${TASK_VERSION}\n"
 
 
 if [ -n "${TASK_VERSION}" ]; then
-    echo "Update ECS Cluster: ${CLUSTER_NAME}"
-    echo "Service: ${SERVICE_NAME}"
-    echo "Task Definition: ${TASK_DEFINITION}:${TASK_VERSION}"
+    echo -e "Updating ECS Cluster : ${CLUSTER_NAME}"
+    echo -e "ECS Service : ${SERVICE_NAME}"
+    echo -e "Task Definition: ${TASK_DEFINITION}:${TASK_VERSION}\n"
 
-    DEPLOYED_SERVICE=$(aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition ${TASK_DEFINITION}:${TASK_VERSION} --force-new-deployment | jq --raw-output '.service.serviceName')
-    echo "Deployment of service \"${DEPLOYED_SERVICE}\" complete!"
+    DEPLOYED_SERVICE=$(aws ecs update-service --cluster ${CLUSTER_NAME} --service ${SERVICE_NAME} --task-definition ${TASK_DEFINITION}:${TASK_VERSION} --force-new-deployment | jq --raw-output '.service.serviceName')
+    echo -e "Deployment of service \"${DEPLOYED_SERVICE}\" complete!"
 
 else
     echo "exit: Unable to register new task definition or version."
