@@ -91,7 +91,12 @@ function getDocsRoute($version = null, $path = null): string
  */
 function getVersionList()
 {
-    return configEnv('version.list');
+    $versionList = array_reverse(configEnv('version.list'));
+
+    if (app()->isLocal()) {
+        return array_merge($versionList, ['temp']);
+    }
+    return $versionList;
 }
 
 /**

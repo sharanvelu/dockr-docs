@@ -6,13 +6,14 @@ if [ ! -f composer.json ]; then
 fi
 
 DOCUMENTATION_VERSIONS=(
-  v0.1
+  v1.1
+  v1.2
 )
 
 for v in "${DOCUMENTATION_VERSIONS[@]}"; do
     if [ -d "markdown/$v" ]; then
         echo "Pulling latest documentation for version $v"
-        (cd markdown/$v && git pull)
+        (cd markdown/$v && git reset --hard && git pull)
     else
         echo "Cloning version $v"
         git clone --single-branch --branch "$v" --no-tags https://github.com/sharanvelu/dockr-documentation.git "markdown/$v"

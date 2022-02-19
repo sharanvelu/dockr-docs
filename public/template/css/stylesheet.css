@@ -672,7 +672,7 @@ hr {
     overflow: hidden;
     overflow-y: auto;
     width: 260px;
-    height: calc(100% - 70px);
+    height: calc(100% - 70px - 50px);
     z-index: 1;
     border-right: 1px solid rgba(0, 0, 0, 0.05);
     transition: all 0.3s;
@@ -738,22 +738,6 @@ hr {
 
 .idocs-navigation .nav .nav .nav .nav-item .nav-link:after {
     left: 45px;
-}
-
-.idocs-navigation > .nav > .nav-item > .nav-link.active:after {
-    position: absolute;
-    content: " ";
-    top: 50%;
-    right: 18px;
-    border-color: #000;
-    border-top: 2px solid;
-    border-right: 2px solid;
-    width: 7px;
-    height: 7px;
-    -webkit-transform: translate(-50%, -50%) rotate(45deg);
-    transform: translate(-50%, -50%) rotate(45deg);
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
 }
 
 .idocs-navigation.docs-navigation-dark .nav .nav-link {
