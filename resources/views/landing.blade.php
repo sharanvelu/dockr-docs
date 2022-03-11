@@ -78,6 +78,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class=""></div>
                     <div class="features-wrap">
                         <div class="feature is-revealing">
                             <div class="feature-inner">
@@ -152,6 +153,17 @@
                             </div>
                         </div>
                     </div>
+                    <div style="padding-top: 88px; font-size:16px">
+                        <div class="alert alert-info">
+                            <div class="row">
+                                <div class="text-danger">Note : &nbsp;</div>
+                                <div>
+                                    More features such as <code class="text-danger">DB Import</code>, <code class="text-danger">Asset Config</code>, <code class="text-danger">Site Proxy</code> and more were already build and is in testing phase.
+                                    <br>We will release the next version once the issues fixed and documentation works are completed.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -160,12 +172,13 @@
             <div class="container-sm">
                 <div class="cta-inner section-inner">
                     <div class="cta-header text-center">
-                        <h2 class="section-title mt-0">Documentation</h2>
+                        <h2 class="section-title mt-0">Documentation <span class="in-development">(In Development)</span></h2>
+
                         <p class="section-paragraph">A not so well-prepared documentation is already live. Documentation preparation is on progress.
                             It is delayed due to the global pandemic. Documentation will be updated as soon as possible.
                         </p>
                         <div class="cta-cta">
-                            <a class="button button-primary" href="{{ getDocsRoute() }}">Documentation</a>
+                            <a class="button button-primary" href="{{ getDocsRoute(null, 'introduction') }}">Documentation</a>
                         </div>
                     </div>
                 </div>

@@ -1999,3 +1999,50 @@ body, a, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .cta .cta-cta a.button:hover {
     transform: scale(1.05);
 }
+
+.alert {
+    position: relative;
+    padding: 1rem 1rem;
+    /*margin-bottom: 1rem;*/
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-warning {
+    color: #664d03;
+    background-color: #fff3cd;
+    border-color: #ffecb5;
+}
+
+.alert-danger {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+
+.alert-info {
+    color: #055160;
+    background-color: #cff4fc;
+    border-color: #b6effb;
+}
+
+.text-danger {
+    color: #bd2835;
+}
+
+.text-info {
+    color: #4fb6cf;
+}
+
+code {
+    font-size: 13px !important;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.in-development {
+    font-size: 15px;
+}
