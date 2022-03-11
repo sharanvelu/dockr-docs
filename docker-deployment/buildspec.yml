@@ -12,8 +12,6 @@ phases:
     commands:
       - export IMAGE_ID=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - echo "Build started at `date`"
-      - echo "installing composer..."
-      - composer install
       - echo "Building the Docker image..."
       - docker build -t ${ECR_REPOSITORY_URL}:${IMAGE_ID} .
       - echo "Build completed at `date`"
