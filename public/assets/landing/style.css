@@ -2046,3 +2046,17 @@ code {
 .in-development {
     font-size: 15px;
 }
+
+body.lights-off .alert.alert-info {
+    color: #89d5e5 !important;
+    background-color: #073d48 !important;
+    border-color: #51757c !important;
+}
+
+body.lights-off code {
+    background: #323232 !important;
+}
+
+body.lights-off .text-danger {
+    color: #e91f31 !important;
+}

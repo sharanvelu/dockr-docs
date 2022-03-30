@@ -39,7 +39,7 @@
                         <h1 class="hero-title mt-0">DockR package for Laravel</h1>
                         <p class="hero-paragraph">Our package lets your Laravel projects run with Docker seamlessly for Local development environment.</p>
                         <div class="hero-cta">
-                            <a class="button button-primary" href="{{ getDocsRoute(null, 'installation') }}">Get it now</a>
+                            <a class="button button-primary" href="{{ route('docs.latest', ['path' => 'introduction']) }}">Get it now</a>
                         </div>
                     </div>
                     <div class="hero-media">
@@ -52,6 +52,7 @@
                             <img class="hero-media-illustration-image asset-dark" src="{{ asset('assets/landing/images/hero-media-illustration-dark.svg') }}" alt="Hero media illustration">
                         </div>
                         <div class="hero-media-container">
+                            {{-- Terminal rows and columns used for this image : 120 x 34 --}}
                             <img class="hero-media-image asset-light" src="{{ asset('assets/landing/images/terminal-output/up-light.png') }}" alt="Hero media">
                             <img class="hero-media-image asset-dark" src="{{ asset('assets/landing/images/terminal-output/up-dark.png') }}" alt="Hero media">
                         </div>
@@ -89,6 +90,18 @@
                                 <div class="feature-content">
                                     <h3 class="feature-title mt-0">PHP Versions</h3>
                                     <p class="text-sm mb-0">DockR supports almost every PHP Versions. Don't worry, other PHP versions weren't abandoned, they will be supported in the upcoming weeks.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature is-revealing">
+                            <div class="feature-inner">
+                                <div class="feature-icon">
+                                    <img class="asset-light" src="{{ asset('assets/landing/images/feature-03-light.svg') }}" alt="Feature 03">
+                                    <img class="asset-dark" src="{{ asset('assets/landing/images/feature-03-dark.svg') }}" alt="Feature 03">
+                                </div>
+                                <div class="feature-content">
+                                    <h3 class="feature-title mt-0">Proxy</h3>
+                                    <p class="text-sm mb-0">DockR provides an option to proxy the incoming request via a Domain name of your choice instead of using <i>localhost:port</i></p>
                                 </div>
                             </div>
                         </div>
@@ -153,17 +166,17 @@
                             </div>
                         </div>
                     </div>
-                    <div style="padding-top: 88px; font-size:16px">
-                        <div class="alert alert-info">
-                            <div class="row">
-                                <div class="text-danger">Note : &nbsp;</div>
-                                <div>
-                                    More features such as <code class="text-danger">DB Import</code>, <code class="text-danger">Asset Config</code>, <code class="text-danger">Site Proxy</code> and more were already build and is in testing phase.
-                                    <br>We will release the next version once the issues fixed and documentation works are completed.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div style="padding-top: 88px; font-size:16px">--}}
+{{--                        <div class="alert alert-info">--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="text-danger">Note : &nbsp;</div>--}}
+{{--                                <div>--}}
+{{--                                    More features such as <code class="text-danger">DB Import</code>, <code class="text-danger">Asset Config</code>, <code class="text-danger">Site Proxy</code> and more were already build and is in testing phase.--}}
+{{--                                    <br>We will release the next version once the issues fixed and documentation works are completed.--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </section>
@@ -172,13 +185,13 @@
             <div class="container-sm">
                 <div class="cta-inner section-inner">
                     <div class="cta-header text-center">
-                        <h2 class="section-title mt-0">Documentation <span class="in-development">(In Development)</span></h2>
+                        <h2 class="section-title mt-0">Documentation</h2>
 
-                        <p class="section-paragraph">A not so well-prepared documentation is already live. Documentation preparation is on progress.
-                            It is delayed due to the global pandemic. Documentation will be updated as soon as possible.
+                        <p class="section-paragraph">
+                            For more information on DockR.<br>Please visit the documentation<br>Documentation link below.
                         </p>
                         <div class="cta-cta">
-                            <a class="button button-primary" href="{{ getDocsRoute(null, 'introduction') }}">Documentation</a>
+                            <a class="button button-primary" href="{{ route('docs.latest') }}">Documentation</a>
                         </div>
                     </div>
                 </div>

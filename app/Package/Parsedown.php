@@ -115,7 +115,7 @@ class Parsedown extends ParsedownExtra
             preg_match('/<li><a href="(.+)<\/a><\/li>/', $line, $matches);
             if (isset($matches[1])) {
                 $activeClass = '';
-                if (!$isActivePathAdded && Str::contains($matches[1], './' . $activePath)) {
+                if (!$isActivePathAdded && Str::contains($matches[0], 'href="./' . $activePath . '"')) {
                     $activeClass = ' active';
                     $isActivePathAdded = true;
                 }
