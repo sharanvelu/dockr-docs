@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Redirect to latest docs content.
+Route::get('/', [DocumentController::class, 'latest']);
+
 // Latest Docs Route
 Route::get('latest/{path?}', [DocumentController::class, 'latest'])->name('docs.latest');
 
