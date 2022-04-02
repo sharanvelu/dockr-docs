@@ -39,7 +39,7 @@
                         <h1 class="hero-title mt-0">DockR package for Laravel</h1>
                         <p class="hero-paragraph">Our package lets your Laravel projects run with Docker seamlessly for Local development environment.</p>
                         <div class="hero-cta">
-                            <a class="button button-primary" href="{{ route('docs.latest', ['path' => 'introduction']) }}">Get it now</a>
+                            <a class="button button-primary" href="{{ route('docs.latest', ['path' => 'install-mac']) }}">Get it now</a>
                         </div>
                     </div>
                     <div class="hero-media">

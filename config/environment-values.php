@@ -68,5 +68,9 @@ return [
             'enabled' => env('DOCKR_BLOG_ENABLED', false),
             'link' => env('DOCKR_BLOG_LINK', 'https://blog.dockr.in')
         ],
-    ]
+    ],
+
+    'site' => [
+        'domain' => env('SITE_DOMAIN', 'dockr.in'),
+    ],
 ];
