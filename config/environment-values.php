@@ -43,8 +43,9 @@ return [
         'list' => [
             'v1.1',
             'v1.2',
+            'v1.5',
         ],
-        'default' => env('DOCS_DEFAULT_VERSION', 'v1.2'),
+        'default' => env('DOCS_DEFAULT_VERSION', 'v1.5'),
     ],
 
     /*
@@ -53,7 +54,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'path' => [
-        'default' => env('DOCS_DEFAULT_PATH', 'install-mac'),
+        'default' => env('DOCS_DEFAULT_PATH', 'introduction'),
         'sidebar' => 'documentation',
     ],
 
