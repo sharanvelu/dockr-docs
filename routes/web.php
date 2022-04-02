@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MarkdownController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Landing Page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Latest Docs Route
+Route::get('docs/latest/{path?}', [DocumentController::class, 'latest'])->name('docs.latest');
+
+// Specified Docs Route
 Route::get('docs/{version}/{path}', [DocumentController::class, 'show'])->name('docs.show');
+Route::get('docs/{version}/{path}/{sub_path}', [DocumentController::class, 'show'])->name('docs.show_2');

@@ -1,14 +1,19 @@
-<div class="row mr-3 ml-0">
-    <label for="header_version_toggle"></label>
-    <select class="version" id="header_version_toggle" name="version_toggle">
+<li class="dropdown">
+    <a class="dropdown-toggle" href="#" onclick="event.preventDefault()">
+        {{ ucwords(request()->route()->parameter('version')) }}
+        <span class="mx-1">&bigtriangledown;</span>
+    </a>
+    <ul class="dropdown-menu">
         @foreach(getVersionList() as $version)
-            <option value="{{ $version }}"
+            <li>
+                <a href="{{ getDocsRoute($version, request()->route('path')) }}"
                     @if($version == request()->route()->parameter('version'))
-                    selected
-                    data-page="current"
+                        onclick="event.preventDefault()" class="dropdown-item text-info"
+                   @else
+                        class="dropdown-item"
                     @endif
-                    data-url="{{ getDocsRoute($version, request()->route('path')) }}"
-            >{{ $version }}</option>
+                >{{ ucwords($version) }}</a>
+            </li>
         @endforeach
-    </select>
-</div>
+    </ul>
+</li>

@@ -84,4 +84,19 @@ class DocumentController extends Controller
             $this->content = view('docs.not-found.path');
         }
     }
+
+    /**
+     * Redirect to the latest version.
+     *
+     * @param $path
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function latest($path = null)
+    {
+        $version = getDefaultVersion();
+
+        $route = getDocsRoute($version, $path);
+
+        return redirect($route);
+    }
 }

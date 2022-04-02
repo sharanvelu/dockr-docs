@@ -43,8 +43,9 @@ return [
         'list' => [
             'v1.1',
             'v1.2',
+            'v1.5',
         ],
-        'default' => 'v1.2',
+        'default' => env('DOCS_DEFAULT_VERSION', 'v1.5'),
     ],
 
     /*
@@ -53,7 +54,19 @@ return [
     |--------------------------------------------------------------------------
     */
     'path' => [
-        'default' => 'installation',
+        'default' => env('DOCS_DEFAULT_PATH', 'introduction'),
         'sidebar' => 'documentation',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Other pages
+    |--------------------------------------------------------------------------
+    */
+    'pages' => [
+        'blog' => [
+            'enabled' => env('DOCKR_BLOG_ENABLED', false),
+            'link' => env('DOCKR_BLOG_LINK', 'https://blog.dockr.in')
+        ],
+    ]
 ];

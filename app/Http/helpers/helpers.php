@@ -109,6 +109,11 @@ function getVersionList()
 function markdown_path($version = null, $path = null): string
 {
     $fileName = getMarkdownFileName($path);
+
+    if (app()->isLocal() && $version == 'temp') {
+        return base_path() . '1/' . $fileName;
+    }
+
     return base_path(
         implode('/', ['markdown', $version, $fileName])
     );
