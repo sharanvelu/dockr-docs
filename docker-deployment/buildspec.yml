@@ -8,6 +8,8 @@ phases:
     commands:
       - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 696088320052.dkr.ecr.ap-south-1.amazonaws.com
+      - echo "Looging into Docker..."
+      - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PAT}
   build:
     commands:
       - export IMAGE_ID=${CODEBUILD_RESOLVED_SOURCE_VERSION}
