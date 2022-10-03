@@ -10,3 +10,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('docker-hub', [WebhookController::class, 'dockerHub']);
+
+// GitHub Actions
+Route::post('github-actions', [WebhookController::class, 'githubActions']);

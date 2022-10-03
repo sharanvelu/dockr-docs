@@ -38,4 +38,24 @@ class WebhookController extends Controller
 
         return response()->json([], 200);
     }
+
+    /**
+     * Notify the GitHub action started
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function githubActions(Request $request)
+    {
+        Log::channel('docker_hub')->info($request->get('message'), [
+            'image' => [
+                'Tag' => $request->get('tag'),
+                'Started At' => now()->format('d, M Y, H:i:s'),
+                'Started By' => $request->get('started_by'),
+            ],
+            'data' => $request->get('data'),
+        ]);
+
+        return response()->json([], 200);
+    }
 }
