@@ -38,18 +38,22 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
+            // Docs SubDomain Routes
+            Route::domain('docs.' . configEnv('site.domain'))->group(function () {
+                Route::middleware('web')
+                    ->namespace($this->namespace)
+                    ->group(base_path('routes/docs.php'));
+            });
 
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
+            // Top Level Domain Routes
+            Route::domain(configEnv('site.domain'))->group(function () {
+                Route::middleware('web')
+                    ->namespace($this->namespace)
+                    ->group(base_path('routes/web.php'));
+            });
 
-            Route::prefix('webhook')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/webhook.php'));
+            // Some routes That should run with any domains
+            $this->bootGlobalRoutes();
         });
     }
 
@@ -62,6 +66,24 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+        });
+    }
+
+    /**
+     * Routes that are irrespective of the domain name
+     *
+     * @return void
+     */
+    private function bootGlobalRoutes()
+    {
+        // Webhook route.
+        Route::prefix('webhook')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/webhook.php'));
+
+        // Health Check Route
+        Route::get('health-check', function () {
+            return response('', 200);
         });
     }
 }
